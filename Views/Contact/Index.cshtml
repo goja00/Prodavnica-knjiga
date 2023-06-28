@@ -1,0 +1,203 @@
+﻿@{
+	ViewData["Title"] = "Kontakt";
+	Layout = "_Layout";
+}
+@section Scripts{
+	<script src="~/js/contact_custom.js"></script>
+	}
+
+@section Styles{
+	<link rel="stylesheet" type="text/css" href="~/styles/bootstrap4/bootstrap.min.css">
+	<link href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="~/styles/contact.css">
+	<link rel="stylesheet" type="text/css" href="~/styles/contact_responsive.css">
+	<link rel="stylesheet" type="text/css" href="~/styles/bootstrap4/styles.css" />
+	<style>
+		.mapouter {
+			position: relative;
+			text-align: right;
+			width: 100%;
+			height: 800px;
+		}
+
+		.gmap_canvas {
+			overflow: hidden;
+			background: none !important;
+			width: 100%;
+			height: 800px;
+		}
+
+		.gmap_iframe {
+			height: 800px !important;
+		}
+
+
+	</style>
+}
+
+<!-- Home -->
+
+<div class="home">
+	<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/contact_slika.jpg" data-speed="0.8"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="home_container">
+					<div class="home_content">
+						<div class="home_title">Kontakt</div>
+						<div class="breadcrumbs">
+							<ul>
+								<li><a asp-controller="Home" asp-action="Index">Početna</a></li>
+								<li>Kontakt</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Google Map -->
+
+<div class="mapouter">
+	<div class="gmap_canvas"><iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 
+	src="https://maps.google.com/maps?width=1920&amp;height=800&amp;hl=en&amp;q=Novi Sad&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+	
+</div>
+</div>
+
+<!-- Contact Form -->
+
+<div class="contact">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="review_form_container">
+					<div class="review_form_title">Kontaktirajte nas!</div>
+					<div class="review_form_content">
+						<form action="#" id="review_form" class="review_form">
+							<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
+								<input type="text" class="review_form_input" placeholder="Name" required="required">
+								<input type="email" class="review_form_input" placeholder="E-mail" required="required">
+								<input type="text" class="review_form_input" placeholder="Subject">
+							</div>
+							<textarea class="review_form_text" name="review_form_text" placeholder="Message"></textarea>
+							<button type="submit" class="review_form_button">send message</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Contact Text -->
+
+<div class="contact_text">
+	<div class="container">
+		<div class="row justify-content-center align-items-center">
+
+			<!-- Contact Info -->
+				<div class="contact_info">
+					<div class="contact_title">contact info</div>
+					<div class="contact_info_content">
+						<ul>
+							<li>
+								<div class="contact_info_icon"><img src="images/contact_info_1.png" alt=""></div>
+								<div class="contact_info_text">Novi Sad,Bulevar Oslobodjenja 50</div>
+							</li>
+							<li>
+								<div class="contact_info_icon"><img src="images/contact_info_2.png" alt=""></div>
+								<div class="contact_info_text">office@bookverse.com</div>
+							</li>
+							<li>
+								<div class="contact_info_icon"><img src="images/contact_info_3.png" alt=""></div>
+								<div class="contact_info_text">021 724 995</div>
+							</li>
+						</ul>
+					</div>
+					<div class="contact_info_social text-center">
+						<ul>
+							<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+							
+							<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+							
+							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						</ul>
+					</div>
+					<br /><br />
+				</div>
+			
+			<!-- FAQ -->
+			<!--Section: FAQ-->
+			<section>
+				<h3 class="text-center mb-4 pb-2 fw-bold contact_title">FAQ</h3>
+				<p class="text-center mb-5">
+					Pronadjite odgovore na često postavljana pitanja
+				</p>
+
+				<div class="row">
+					<div class="col-md-6 col-lg-4 mb-4">
+						<h6 class="contact_info_text">
+							Kako da kupim proizvod?
+						</h6>
+						<p>
+							Proizvod možete kupiti tako što ćete ući u našu prodavnicu,izabrati proizvod koji želite i kliknuti na dugme 
+							<strong>+</strong> koje će vas proslediti na stranicu o detaljima vezanim za proizvod. Tu možete izabrati količinu koja vam je 
+							potrebna i uneti podatke potrebne za dostavu proizvoda. 
+						</p>
+					</div>
+
+					<div class="col-md-6 col-lg-4 mb-4">
+						<h6 class="contact_info_text">
+							Da li je moguća dostava na adresu?
+						</h6>
+						<p>
+							<strong><u>Da, moguća je!</u></strong> Brza dostava je moguća na celoj teritoriji Republike Srbije!
+						</p>
+					</div>
+
+					<div class="col-md-6 col-lg-4 mb-4">
+						<h6 class="contact_info_text">
+							Kako da napravim profil?
+						</h6>
+						<p>
+							Profil možete napraviti tako što kliknete da dugme <strong>Register</strong> gde ćete uneti potrebne podatke.
+							Nakon toga kada napravite profil,slobodni ste da pretražujete našu prodavnicu i vršite kupovinu! 
+						</p>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+
+
+
+<!--Newsletter-->
+<div class="newsletter">
+	<div class="newsletter_content">
+		<div class="newsletter_image" style="background-image:url(images/zadnja_slika.jpg)"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<div class="section_subtitle">Najbolje knjige samo kod nas!</div>
+						<div class="section_title">Sabskrajbujte se za 20% popusta!</div>
+					</div>
+				</div>
+			</div>
+			<div class="row newsletter_container">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="newsletter_form_container">
+						<form action="#">
+							<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
+							<button type="submit" class="newsletter_button">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

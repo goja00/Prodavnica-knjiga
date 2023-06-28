@@ -1,0 +1,230 @@
+﻿@using bookverse.Models;
+@{
+	ViewData["Title"] = "Prodavnica";
+	IEnumerable<Category> categories = ViewBag.categoriesList;
+	IEnumerable<CoverType> coverTypes = ViewBag.coverTypeList;
+	
+}
+@model IEnumerable<Product>
+
+@section Styles{
+	<link rel="stylesheet" type="text/css" href="~/styles/bootstrap4/bootstrap.min.css">
+	<link href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="~/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="~/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="~/styles/categories.css">
+	<link rel="stylesheet" type="text/css" href="~/styles/categories_responsive.css">
+}
+
+<!-- Home -->
+
+<div class="home">
+	<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/prodavnica_banner.jpg" data-speed="0.8"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="home_container">
+					<div class="home_content">
+						<div class="home_title">Prodavnica</div>
+						<div class="breadcrumbs">
+							<ul>
+								<li><a asp-controller="Shop" asp-action="ToHome">Početna</a></li>
+								<li>Prodavnica</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Products -->
+
+<div class="products">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+
+				<!-- Sidebar Left -->
+
+				<div class="sidebar_left clearfix" style="margin-top:-13.5%;">
+
+					<!-- Categories -->
+					<div class="sidebar_section">
+						<div class="sidebar_title">Kategorije</div>
+						<div class="sidebar_section_content">
+							<ul>
+								@foreach(var item in categories)
+								{
+								<li><a href="#">@item.Name</a></li>
+								}
+							</ul>
+						</div>
+					</div>
+
+					<!-- Color -->
+					<div class="sidebar_section">
+						<div class="sidebar_title">Povez</div>
+						<div class="sidebar_section_content sidebar_color_content mCustomScrollbar" data-mcs-theme="minimal-dark">
+							<ul>
+								@foreach(var item in coverTypes)
+								{
+									<li><a href="#">@item.Name</a></li>
+								}
+								</ul>
+						</div>
+					</div>
+
+					<!-- Price -->
+					<div class="sidebar_section">
+						<div class="sidebar_title">Cena</div>
+						<div class="sidebar_section_content">
+							<div class="filter_price">
+								<div id="slider-range" class="slider_range"></div>
+								<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
+								<div class="clear_price_btn">Obrisi</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Best Sellers -->
+
+					<div class="sidebar_section">
+						<div class="sidebar_title">Best Sellers</div>
+						<div class="sidebar_section_content bestsellers_content">
+							<ul>
+								<!-- Best Seller Item -->
+								<li class="clearfix">
+									<div class="best_image"><img src="images/best1.jpg" width="74" height="74" alt=""></div>
+									<div class="best_content">
+										<div class="best_title"><a href="product.html">Sreća je piti čaj s tobom</a></div>
+										<div class="best_price">999 din.</div>
+									</div>
+									<div class="best_buy">+</div>
+								</li>
+
+								<!-- Best Seller Item -->
+								<li class="clearfix">
+									<div class="best_image"><img src="images/best2.png" width="74" height="74" alt=""></div>
+									<div class="best_content">
+										<div class="best_title"><a href="product.html">Bolja strana</a></div>
+										<div class="best_price">799 din.</div>
+									</div>
+									<div class="best_buy">+</div>
+								</li>
+
+								<!-- Best Seller Item -->
+								<li class="clearfix">
+									<div class="best_image"><img src="images/best3.jpg" width="74" height="74" alt=""></div>
+									<div class="best_content">
+										<div class="best_title"><a href="product.html">Zvezda nad prazninom</a></div>
+										<div class="best_price">1199 din.</div>
+									</div>
+									<div class="best_buy">+</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+				
+			</div>
+		</div>
+
+		<div class="row products_container">
+			<div class="col">
+
+				<!-- Products -->
+
+				<div class="product_grid">
+					<table class="table">
+						<!-- PRVI RED-->
+						<div style="margin-top:15%;"></div>						
+						<script type="text/javascript">
+							const columnsPerRow = 4;
+							let currentColumn = 0;
+						
+							var data = @Html.Raw(Json.Serialize(Model));
+							data.forEach(function (item){
+
+								if (currentColumn === 0) {
+									document.write('<tr>');
+								}
+
+								document.write(`
+								<td>
+								  <div style="margin-top: -70%;">
+									<div class="product">
+									  <div class="product_image" style="width: 300px; height: 300px;">
+										<a href="/Product/Index/${item.id}"><img src="${item.imageURL}" alt=""></a>
+									  </div>
+									  <br /><br /><br /><br /><br /><br /><br /><br/>
+									  <div class="product_content clearfix" style="width: 300px; height: 300px;">
+										<div class="product_info">
+										  <div class="product_name">
+										<a href="/Product/Index/${item.id}">${item.name}</a>
+										  </div>
+										 <div class="product_price">${item.price} din.</div>
+										</div>
+										<div class="product_options">
+										  <div class="product_buy product_option">
+											<img src="images/shopping-bag-white.svg" alt="">
+										  </div>
+										  <div class="product_fav product_option">+</div>
+										</div>
+									  </div>
+									</div>
+								  </div>
+								</td>
+								 `);
+
+								currentColumn++;
+
+								if (currentColumn === columnsPerRow) {
+									currentColumn = 0;
+									document.write('</tr>');
+								}
+							});
+
+							if (currentColumn !== 0) {
+								document.write('</tr>');
+							}
+
+						</script>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Extra -->
+<!-- Newsletter -->
+
+<div class="newsletter">
+	<div class="newsletter_content">
+		<div class="newsletter_image" style="background-image:url(images/zadnja_slika.jpg)"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<div class="section_subtitle">Najbolje knjige samo kod nas!</div>
+						<div class="section_title">Sabskrajbujte se za 20% popusta!</div>
+					</div>
+				</div>
+			</div>
+			<div class="row newsletter_container">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="newsletter_form_container">
+						<form action="#">
+							<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
+							<button type="submit" class="newsletter_button">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,160 @@
+﻿
+@{
+	ViewData["Title"] = "Korpa";
+	double res = 0;
+	double ukupno = 250;
+	List<ShoppingCart> prod = ViewBag.products;
+}
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+    <link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/styles/cart.css">
+    <link rel="stylesheet" type="text/css" href="/styles/cart_responsive.css">
+}
+@section Scripts{
+    <script src="/js/cart_custom.js"></script>
+}
+
+<div class="home">
+	<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/shopping_cart.jpg" data-speed="0.8"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="home_container">
+					<div class="home_content">
+						<div class="home_title">Korpa</div>
+						<div class="breadcrumbs">
+							<ul>
+								<li><a asp-controller="Home" asp-action="Index">Početna</a></li>
+								<li>Korpa</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Cart -->
+
+<div class="cart_container">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="cart_title">Tvoja korpa</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="cart_bar d-flex flex-row align-items-center justify-content-start">
+					<div class="cart_bar_title_name">Proizvod</div>
+					<div class="cart_bar_title_content ml-auto">
+						<div class="cart_bar_title_content_inner d-flex flex-row align-items-center justify-content-end">
+							<div class="cart_bar_title_price">Cena</div>
+							<div class="cart_bar_title_quantity">Količina</div>
+							<div class="cart_bar_title_total">Ukupno</div>
+							<div class="cart_bar_title_button"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		@foreach(var item in prod)
+		{
+			res = res + item.Prod.Price * item.Count;
+			ukupno = ukupno + res;
+			<div class="row">
+			<div class="col">
+				<div class="cart_products">
+					<ul>
+						<li class=" cart_product d-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-start">
+							<!-- Product Image -->
+							<div class="cart_product_image"><img src="@item.Prod.ImageURL" style="width:120px;height:120px;" alt=""></div>
+							<!-- Product Name -->
+							<div class="cart_product_name">@item.Prod.Name</div>
+							<div class="cart_product_info ml-auto">
+								<div class="cart_product_info_inner d-flex flex-row align-items-center justify-content-md-end justify-content-start">
+									<!-- Product Price -->
+									<div class="cart_product_price">@item.Prod.Price din.</div>
+									<!-- Product Quantity -->
+									<div class="product_quantity_container">
+										<div class="product_quantity clearfix">
+											@item.Count
+										</div>
+									</div>
+									<!-- Products Total Price -->
+									<div class="cart_product_total">@res din.</div>
+									<!-- Product Cart Trash Button -->
+									<div class="cart_product_button">
+										<button class="cart_product_remove"><img src="images/trash.png" alt=""></button>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		}
+		<div class="row">
+			<div class="col">
+				<div class="cart_control_bar d-flex flex-md-row flex-column align-items-start justify-content-start">
+					
+					<a asp-controller="Shop" asp-action="Index"><button class="button_update cart_button_2 ml-md-auto">Nastavite kupovinu</button></a>
+				</div>
+			</div>
+		</div>
+		<div class="row cart_extra">
+			<!-- Cart Total -->
+			<div class="col-lg-5 offset-lg-1">
+				<div class="cart_total">
+					<div class="cart_title">UKUPNO</div>
+					<ul>
+						<li class="d-flex flex-row align-items-center justify-content-start">
+							<div class="cart_total_title">Proizvodi</div>
+							<div class="cart_total_price ml-auto"></div>
+						</li>
+						<li class="d-flex flex-row align-items-center justify-content-start">
+							<div class="cart_total_title">Dostava</div>
+							<div class="cart_total_price ml-auto">250 din.</div>
+						</li>
+						<li class="d-flex flex-row align-items-center justify-content-start">
+							<div class="cart_total_title">Total</div>
+							<div class="cart_total_price ml-auto">@ukupno</div>
+						</li>
+					</ul>
+					<a asp-action="Checkout" asp-controller="ShoppingCart"><button class="cart_total_button">Dalje</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Newsletter -->
+<div class="newsletter">
+	<div class="newsletter_content">
+		<div class="newsletter_image" style="background-image:url(images/zadnja_slika.jpg)"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<div class="section_subtitle">Najbolje knjige samo kod nas!</div>
+						<div class="section_title">Sabskrajbujte se za 20% popusta!</div>
+					</div>
+				</div>
+			</div>
+			<div class="row newsletter_container">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="newsletter_form_container">
+						<form action="#">
+							<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
+							<button type="submit" class="newsletter_button">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

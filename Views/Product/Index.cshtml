@@ -1,0 +1,133 @@
+﻿
+@{
+	ViewData["Title"] = Model.Name + "-" + Model.Author;
+	
+}
+
+@section Styles
+	{
+	<link rel="stylesheet" type="text/css" href="~/styles/bootstrap4/bootstrap.min.css">
+	<link href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="~/styles/product.css">
+	<link rel="stylesheet" type="text/css" href="~/styles/product_responsive.css">
+	<link href="~/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="~/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+	
+}
+@section Scripts{
+	<script src="~/js/product_custom.js"></script>
+	
+}
+
+@model Product
+
+<!-- Home -->
+
+<div class="home">
+	<div class="home_background parallax-window" data-parallax="scroll" data-image-src="/images/contact_slika.jpg" data-speed="0.8"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="home_container">
+					<div class="home_content">
+						<div class="home_title">@Model.Name</div>
+						<div class="breadcrumbs">
+							<ul>
+								<li><a asp-action="Index" asp-controller="Home">Početna</a></li>
+								<li><a asp-controller="Shop" asp-action="Index">Prodavnica</a></li>
+								<li>@Model.Name</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="product">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="current_page">
+					<ul>
+						<li><a asp-action="Index" asp-controller="Home">Pocetna</a></li>
+						<li><a asp-controller="Shop" asp-action="Index">Prodavnica</a></li>
+						<li>@Model.Name</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row product_row">
+
+			<!-- Product Image -->
+			<div class="col-lg-4 mx-auto">
+				<div class="product_image">
+					<div class="product_image_large"><img src="@Model.ImageURL" alt=""></div>
+				</div>
+			</div>
+
+			<!-- Product Content -->
+			<div class="col-lg-5">
+				<div class="product_content">
+					<div class="product_name">@Model.Name</div>
+					<div class="product_price">@Model.Price din.</div>
+
+					<!-- In Stock -->
+					<div class="in_stock_container">
+						<div class="in_stock in_stock_true"></div>
+						<span>Na lageru</span>
+					</div>
+					<div class="product_text text-justify">
+						<wbr />@Model.Description
+					</div>
+					<!-- Product Quantity -->
+					<div class="product_quantity_container">
+						<span>Količina</span>
+						<div class="product_quantity clearfix">
+							<input id="quantity_input" type="text" name="myInput" pattern="[0-9]*" value="1">
+							<div class="quantity_buttons">
+								<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
+								<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+							</div>
+						</div>
+					</div>
+					
+						@using (Html.BeginForm("AddProduct", "ShoppingCart", new { id =Model.Id},FormMethod.Post))
+						{
+							<button class="button cart_button" style="border:none;color:white;" type="submit">Dodaj u korpu</button>
+						}
+					
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+<!-- Newsletter -->
+<div class="newsletter">
+	<div class="newsletter_content">
+		<div class="newsletter_image" style="background-image:url(/images/zadnja_slika.jpg)"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<div class="section_subtitle">Najbolje knjige samo kod nas!</div>
+						<div class="section_title">Sabskrajbujte se za 20% popusta!</div>
+					</div>
+				</div>
+			</div>
+			<div class="row newsletter_container">
+				<div class="col-lg-10 offset-lg-1">
+					<div class="newsletter_form_container">
+						<form action="#">
+							<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
+							<button type="submit" class="newsletter_button">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
