@@ -23,6 +23,10 @@ public class DBContext : IdentityDbContext<IdentityUser>
     public DbSet<Product> products { get; set; }    
     public DbSet<CoverType> coverTypes { get; set; }  
     public DbSet<ApplicationUser> applicationUsers { get; set; }
-    public DbSet<ShoppingCart> shoppingCarts { get; set; }      
+    public DbSet<Shopping_Cart> shoppingCarts { get; set; }  
+    public DbSet<Newsletter> newsletters { get; set; }  
+    public DbSet<OrderHeader> orderHeaders { get; set; } 
+    public DbSet<OrderDetails> orderDetails { get; set; }
+
 
 }

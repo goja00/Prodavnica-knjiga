@@ -36,6 +36,9 @@ namespace bookverse.Models
         public int CoverTypeID { get; set; }
         [ValidateNever]
         public CoverType ct { get; set; }
+
+        [NotMapped]
+        public int Count { get; set; }
     }
 }
 

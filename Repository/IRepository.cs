@@ -4,10 +4,18 @@ namespace bookverse.Repository
 {
     public interface IRepository<T> where T: class
     {
-        T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-        IEnumerable<T> GetAll();
-        void Add(T item);
+		IEnumerable<T> GetAll(
+			 Expression<Func<T, bool>>? filter = null,
+			 Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+			 string? includeProperties = null
+			 );
+
+		T GetFirstOrDefault(
+			Expression<Func<T, bool>>? filter = null,
+			string? includeProperties = null
+			);
+		void Add(T item);
         void Delete(T item);
-        
+		void RemoveRange(IEnumerable<T> item);
     }
 }

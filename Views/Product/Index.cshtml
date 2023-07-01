@@ -1,7 +1,7 @@
 ﻿
 @{
 	ViewData["Title"] = Model.Name + "-" + Model.Author;
-	
+	Newsletter ns = new Newsletter();
 }
 
 @section Styles
@@ -51,24 +51,27 @@
 			<div class="col">
 				<div class="current_page">
 					<ul>
-						<li><a asp-action="Index" asp-controller="Home">Pocetna</a></li>
+						<li><a asp-action="Index" asp-controller="Home">Početna</a></li>
 						<li><a asp-controller="Shop" asp-action="Index">Prodavnica</a></li>
 						<li>@Model.Name</li>
 					</ul>
 				</div>
 			</div>
 		</div>
+		@using (Html.BeginForm("AddProduct", "ShoppingCart",FormMethod.Post))
+		{
+			<input asp-for="Id" hidden>
 		<div class="row product_row">
 
 			<!-- Product Image -->
-			<div class="col-lg-4 mx-auto">
+			<div class="col-lg-4 ">
 				<div class="product_image">
 					<div class="product_image_large"><img src="@Model.ImageURL" alt=""></div>
 				</div>
 			</div>
 
 			<!-- Product Content -->
-			<div class="col-lg-5">
+			<div class="col-lg-8">
 				<div class="product_content">
 					<div class="product_name">@Model.Name</div>
 					<div class="product_price">@Model.Price din.</div>
@@ -78,29 +81,29 @@
 						<div class="in_stock in_stock_true"></div>
 						<span>Na lageru</span>
 					</div>
-					<div class="product_text text-justify">
-						<wbr />@Model.Description
+					<div class="product_text  text-justify">
+						<p>@Model.Description</p>
 					</div>
 					<!-- Product Quantity -->
-					<div class="product_quantity_container">
-						<span>Količina</span>
-						<div class="product_quantity clearfix">
-							<input id="quantity_input" type="text" name="myInput" pattern="[0-9]*" value="1">
-							<div class="quantity_buttons">
-								<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
-								<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
-							</div>
+
+						<div class="product_quantity_container" style="margin-top:0px;"><b>Količina:</b>
+							<div class="product_quantity clearfix">
+								@Html.TextBoxFor(p=>p.Count,new{@id="quantity_input"})
+					<!--<input asp-for="Count" id="quantity_input" type="text" name="myInput" pattern="[0-9]*" value="1"> -->
+																
+								<div class="quantity_buttons">
+									<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
+									<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-caret-down" aria-hidden="true"></i></div>
+								</div>
+                            </div>
+							<button class="button cart_button" style="border:none;color:white;cursor:pointer;margin-left:0;" type="submit">Dodaj u korpu</button>
 						</div>
-					</div>
-					
-						@using (Html.BeginForm("AddProduct", "ShoppingCart", new { id =Model.Id},FormMethod.Post))
-						{
-							<button class="button cart_button" style="border:none;color:white;" type="submit">Dodaj u korpu</button>
-						}
-					
+							
+				
 				</div>
 			</div>
 		</div>
+		}
 		</div>
 		</div>
 <!-- Newsletter -->
@@ -119,10 +122,11 @@
 			<div class="row newsletter_container">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="newsletter_form_container">
-						<form action="#">
-							<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
+						@using (Html.BeginForm("AddEmail", "Home",new{@id="myForm"},FormMethod.Post))
+		{
+							<input asp-for="@ns.Email" id="imejl" type="email" class="newsletter_input" required="required" placeholder="E-mail here">
 							<button type="submit" class="newsletter_button">Subscribe</button>
-						</form>
+		}
 					</div>
 				</div>
 			</div>

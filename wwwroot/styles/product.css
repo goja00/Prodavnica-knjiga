@@ -848,7 +848,7 @@ section
 .rating_5 i:nth-child(5){color: #f5c06f;}
 .in_stock_container
 {
-	margin-top: 27px;
+	margin-top: 12px;
 }
 .in_stock
 {
@@ -879,7 +879,7 @@ section
 }
 .product_text
 {
-	margin-top: 56px;
+	margin-top: 20px;
 }
 .product_text p:last-of-type
 {
@@ -887,7 +887,7 @@ section
 }
 .product_quantity_container
 {
-	margin-top: 43px;
+	margin-top:0px;
 }
 .product_quantity_container span
 {
@@ -906,7 +906,7 @@ section
 	overflow: hidden;
 	padding-left: 11px;
 	vertical-align: middle;
-	margin-left: 14px;
+	margin-left: 0!important;
 }
 .product_quantity input
 {

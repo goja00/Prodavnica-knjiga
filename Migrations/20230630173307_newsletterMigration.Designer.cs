@@ -12,8 +12,8 @@ using bookverse.Data;
 namespace bookverse.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20230628202328_modifiedShoppingCart")]
-    partial class modifiedShoppingCart
+    [Migration("20230630173307_newsletterMigration")]
+    partial class newsletterMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,6 +61,23 @@ namespace bookverse.Migrations
                     b.ToTable("coverTypes");
                 });
 
+            modelBuilder.Entity("bookverse.Models.Newsletter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("newsletters");
+                });
+
             modelBuilder.Entity("bookverse.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -103,14 +120,20 @@ namespace bookverse.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("bookverse.Models.ShoppingCart", b =>
+            modelBuilder.Entity("bookverse.Models.Shopping_Cart", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -118,6 +141,8 @@ namespace bookverse.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("shoppingCarts");
                 });
@@ -372,7 +397,7 @@ namespace bookverse.Migrations
                     b.Navigation("ct");
                 });
 
-            modelBuilder.Entity("bookverse.Models.ShoppingCart", b =>
+            modelBuilder.Entity("bookverse.Models.Shopping_Cart", b =>
                 {
                     b.HasOne("bookverse.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -382,7 +407,7 @@ namespace bookverse.Migrations
 
                     b.HasOne("bookverse.Models.Product", "Prod")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

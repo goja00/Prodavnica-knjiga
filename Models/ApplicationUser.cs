@@ -17,7 +17,7 @@ namespace bookverse.Models
         public string? Town { get; set; }
         [DisplayName("Zip code")]
         public int? ZipCode { get; set; }
-        public string? PhoneNumber { get; set; }
+        
         public string? Comment { get; set; }
 
     }

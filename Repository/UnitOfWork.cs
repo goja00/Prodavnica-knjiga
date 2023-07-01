@@ -11,9 +11,14 @@ namespace bookverse.Repository
 
        public IProductRepository productRepository { get; private set; }
         public IShoppingCartRepository shoppingCartRepository { get; private set; }
-        public IApplicationUserRepository applicationUserRepository { get; private set; }   
+        public IApplicationUserRepository applicationUserRepository { get; private set; }  
+        public INewsletterRepository newsletterRepository { get; private set; }
 
-       private DBContext db;
+        public IOrderDetailsRepository orderDetailsRepository {get; private set;}
+
+        public IOrderHeaderRepository orderHeaderRepository { get; private set; }
+
+        private DBContext db;
 
         public UnitOfWork(DBContext _db) {
             db = _db;
@@ -22,6 +27,9 @@ namespace bookverse.Repository
             productRepository=new ProductRepository(db);
             shoppingCartRepository=new ShoppingCartRepository(db);
             applicationUserRepository=new ApplicationUserRepository(db);
+            newsletterRepository=new NewsletterRepository(db);
+            orderDetailsRepository = new OrderDetailsRepository(db);
+            orderHeaderRepository = new OrderHeaderRepository(db);
        
         }
       

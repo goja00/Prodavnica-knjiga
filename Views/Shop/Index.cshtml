@@ -3,7 +3,7 @@
 	ViewData["Title"] = "Prodavnica";
 	IEnumerable<Category> categories = ViewBag.categoriesList;
 	IEnumerable<CoverType> coverTypes = ViewBag.coverTypeList;
-	
+	Newsletter ns = new Newsletter();
 }
 @model IEnumerable<Product>
 
@@ -201,11 +201,9 @@
 </div>
 
 <!-- Extra -->
-<!-- Newsletter -->
-
 <div class="newsletter">
 	<div class="newsletter_content">
-		<div class="newsletter_image" style="background-image:url(images/zadnja_slika.jpg)"></div>
+		<div class="newsletter_image" style="background-image:url(/images/zadnja_slika.jpg)"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -218,10 +216,11 @@
 			<div class="row newsletter_container">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="newsletter_form_container">
-						<form action="#">
-							<input type="email" class="newsletter_input" required="required" placeholder="E-mail here">
+						@using (Html.BeginForm("AddEmail", "Home", FormMethod.Post))
+						{
+							<input asp-for="@ns.Email" id="imejl" type="email" class="newsletter_input" required="required" placeholder="E-mail here">
 							<button type="submit" class="newsletter_button">Subscribe</button>
-						</form>
+						}
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bookverse.Repository
 {
-    public class ShoppingCartRepository : Repository<ShoppingCart>, IShoppingCartRepository
+    public class ShoppingCartRepository : Repository<Shopping_Cart>, IShoppingCartRepository
     {
         private DBContext db;
         public ShoppingCartRepository(DBContext _db) : base(_db)
@@ -12,6 +12,16 @@ namespace bookverse.Repository
             db = _db;
         }
 
-  
+        public int DecrementCount(Shopping_Cart sc, int count)
+        {
+            sc.Count -= count;
+            return sc.Count;
+        }
+
+        public int IncrementCount(Shopping_Cart sc, int count)
+        {
+            sc.Count += count;
+            return sc.Count;
+        }
     }
 }
