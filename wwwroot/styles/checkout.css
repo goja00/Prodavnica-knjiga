@@ -881,7 +881,7 @@ section
 .cart_total
 {
 	width: 100%;
-	margin-top: 64px;
+	margin-top: 12px;
 }
 .cart_total ul
 {
@@ -892,9 +892,11 @@ section
 .cart_total ul li
 {
 	width: 100%;
-	height: 56px;
+	
 	padding-left: 40px;
 	padding-right: 32px;
+	padding-top:25px;
+	padding-bottom:25px;
 	font-size: 14px;
 	color: #2f2f2f;
 	border-bottom: solid 1px #b5b5b5;

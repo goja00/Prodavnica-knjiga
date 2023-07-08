@@ -27,6 +27,6 @@ public class DBContext : IdentityDbContext<IdentityUser>
     public DbSet<Newsletter> newsletters { get; set; }  
     public DbSet<OrderHeader> orderHeaders { get; set; } 
     public DbSet<OrderDetails> orderDetails { get; set; }
-
+    public DbSet<CustomerMessage> customerMessages { get; set; }
 
 }

@@ -50,11 +50,12 @@
 				<div class="billing">
 					<div class="checkout_title">Informacije o porudžbini</div>
 					<div class="checkout_form_container">
-						<form action="post" id="checkout_form">
+						@using (Html.BeginForm("OrderPOST", "ShoppingCart", FormMethod.Post))
+								{
 							<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-								<input type="text" class="checkout_input checkout_input_50" asp-for="OrderHeader.FirstName" placeholder="Ime" required="required">
+								<input type="text" class="checkout_input " asp-for="OrderHeader.FirstName" placeholder="Ime" required="required">
 								<span asp-validation-for="OrderHeader.FirstName" class="text-danger"></span>
-								<input type="text" class="checkout_input checkout_input_50" asp-for="OrderHeader.LastName" placeholder="Prezime" required="required">
+								<input type="text" class="checkout_input ml-3" asp-for="OrderHeader.LastName" placeholder="Prezime" required="required">
 								<span asp-validation-for="OrderHeader.LastName" class="text-danger"></span>
 							</div>
 							<input type="text" class="checkout_input" asp-for="OrderHeader.Address" placeholder="Adresa">
@@ -62,13 +63,17 @@
 							<input type="text" class="checkout_input" asp-for="OrderHeader.Town" placeholder="Grad" required="required">
 							<span asp-validation-for="OrderHeader.Town" class="text-danger"></span>
 							<div class="d-flex flex-lg-row flex-column align-items-start justify-content-between">
-								<input type="text" class="checkout_input checkout_input_50" asp-for="OrderHeader.ZipCode" placeholder="Poštanski broj" required="required">
+								<input type="text" class="checkout_input" asp-for="OrderHeader.ZipCode" placeholder="Poštanski broj" required="required">
 								<span asp-validation-for="OrderHeader.ZipCode" class="text-danger"></span>
-								<input type="text" class="checkout_input checkout_input_50" asp-for="OrderHeader.PhoneNumber" placeholder="Broj telefona" required="required">
+								<input type="text" class="checkout_input ml-3" asp-for="OrderHeader.PhoneNumber" placeholder="Broj telefona" required="required">
 								<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
 							</div>
 							<textarea name="checkout_comment" id="checkout_comment" class="checkout_comment" placeholder="Komentar"></textarea>
-						</form>
+							<div class="payment_options">
+						<button type="submit" class="cart_total_button" style="background-color:seagreen;margin-top:0">Kupite</button>
+								
+							</div>
+						}
 					</div>
 				</div>
 			</div>
@@ -84,7 +89,7 @@
 								<div class="cart_total_price ml-auto"><b>Ukupno</b></div>
 							</li>
 							
-							<li style=" display: flex;flex-direction:column">
+							<li style=" display: flex;flex-direction:column; ">
                                 @foreach (var item in Model.ListCart)
 								{
 									double res = item.Prod.Price * item.Count;
@@ -94,26 +99,21 @@
 									
 								
 								}
-	
+								<div class="cart_total_title">Dostava
+									<div class="cart_total_price" style="float:right">250 din.</div>
+								</div><br />
+
+                                <div class="cart_total_title">
+                                    <b>TOTAL</b>
+									<div class="cart_total_price " style="float:right">@ukupno din.</div>
+									</div>
+								
 							</li>
 							
-							
-							<li class="d-flex flex-row align-items-center justify-content-start">
-								<div class="cart_total_title">Dostava</div>
-								<div class="cart_total_price ml-auto">250 din.</div>
-							</li>
-							<li class="d-flex flex-row align-items-start justify-content-start total_row">
-								<div class="cart_total_title"><b>TOTAL</b></div>
-								<div class="cart_total_price ml-auto">@ukupno din.</div>
-							</li>
 						</ul>
 					</div>
-					<div class="payment_options">
-						@using(Html.BeginForm("OrderPOST","ShoppingCart",new{order=order},FormMethod.Post))
-						{
-						<button type="submit" class="cart_total_button" style="background-color:seagreen;">Kupite</button>
-                        }
-                    </div>
+					
+					
 				</div>
 			</div>
 		</div>

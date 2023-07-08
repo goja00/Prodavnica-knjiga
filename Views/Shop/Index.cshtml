@@ -3,23 +3,24 @@
 	ViewData["Title"] = "Prodavnica";
 	IEnumerable<Category> categories = ViewBag.categoriesList;
 	IEnumerable<CoverType> coverTypes = ViewBag.coverTypeList;
+	Product p = new Product();
 	Newsletter ns = new Newsletter();
 }
-@model IEnumerable<Product>
+@model List<Product>
 
 @section Styles{
-	<link rel="stylesheet" type="text/css" href="~/styles/bootstrap4/bootstrap.min.css">
-	<link href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link href="~/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" type="text/css" href="~/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="~/styles/categories.css">
-	<link rel="stylesheet" type="text/css" href="~/styles/categories_responsive.css">
+	<link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+	<link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="/plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
+	
+	<link rel="stylesheet" type="text/css" href="/styles/categories.css">
+	<link rel="stylesheet" type="text/css" href="/styles/categories_responsive.css">
 }
 
 <!-- Home -->
 
 <div class="home">
-	<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/prodavnica_banner.jpg" data-speed="0.8"></div>
+	<div class="home_background parallax-window" data-parallax="scroll" data-image-src="/images/prodavnica_banner.jpg" data-speed="0.8"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col">
@@ -54,23 +55,23 @@
 					<div class="sidebar_section">
 						<div class="sidebar_title">Kategorije</div>
 						<div class="sidebar_section_content">
-							<ul>
+							<ul id="categoryList">
 								@foreach(var item in categories)
 								{
-								<li><a href="#">@item.Name</a></li>
+								<li style="cursor:pointer"><a asp-action="FilterByCategory" asp-route-filter="@item.Name">@item.Name</a></li>
 								}
 							</ul>
 						</div>
 					</div>
 
-					<!-- Color -->
+					
 					<div class="sidebar_section">
 						<div class="sidebar_title">Povez</div>
 						<div class="sidebar_section_content sidebar_color_content mCustomScrollbar" data-mcs-theme="minimal-dark">
-							<ul>
+							<ul id="coverList">
 								@foreach(var item in coverTypes)
 								{
-									<li><a href="#">@item.Name</a></li>
+									<li><a asp-action="FilterByCoverType" asp-route-filter="@item.Name">@item.Name</a></li>
 								}
 								</ul>
 						</div>
@@ -82,8 +83,13 @@
 						<div class="sidebar_section_content">
 							<div class="filter_price">
 								<div id="slider-range" class="slider_range"></div>
-								<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
-								<div class="clear_price_btn">Obrisi</div>
+								@using (Html.BeginForm("FilterByPrice", "Shop", FormMethod.Get)){
+									
+									<input type="text" name="price" style="color:black;" placeholder="Cena" id="amount" class="form-control">
+								<span asp-validation-for="@p.Price" class="text-danger"></span>
+									<button class="button cart_button" style="margin-top:10px;border:none;color:white;cursor:pointer;" type="submit">Pretrazi</button>
+                                
+								}
 							</div>
 						</div>
 					</div>
@@ -96,32 +102,32 @@
 							<ul>
 								<!-- Best Seller Item -->
 								<li class="clearfix">
-									<div class="best_image"><img src="images/best1.jpg" width="74" height="74" alt=""></div>
+									<div class="best_image"><img src="/images/best1.jpg" width="74" height="74" alt=""></div>
 									<div class="best_content">
-										<div class="best_title"><a href="product.html">Sreća je piti čaj s tobom</a></div>
+										<div class="best_title"><a asp-action="Index" asp-controller="Product" asp-route-id="1004">Sreća je piti čaj s tobom</a></div>
 										<div class="best_price">999 din.</div>
 									</div>
-									<div class="best_buy">+</div>
+									
 								</li>
 
 								<!-- Best Seller Item -->
 								<li class="clearfix">
-									<div class="best_image"><img src="images/best2.png" width="74" height="74" alt=""></div>
+									<div class="best_image"><img src="/images/best2.png" width="74" height="74" alt=""></div>
 									<div class="best_content">
-										<div class="best_title"><a href="product.html">Bolja strana</a></div>
+										<div class="best_title"><a asp-action="Index" asp-controller="Product" asp-route-id="1003">Bolja strana</a></div>
 										<div class="best_price">799 din.</div>
 									</div>
-									<div class="best_buy">+</div>
+									
 								</li>
 
 								<!-- Best Seller Item -->
 								<li class="clearfix">
-									<div class="best_image"><img src="images/best3.jpg" width="74" height="74" alt=""></div>
+									<div class="best_image"><img src="/images/best3.jpg" width="74" height="74" alt=""></div>
 									<div class="best_content">
-										<div class="best_title"><a href="product.html">Zvezda nad prazninom</a></div>
+										<div class="best_title"><a asp-action="Index" asp-controller="Product" asp-route-id="1002">Zvezda nad prazninom</a></div>
 										<div class="best_price">1199 din.</div>
 									</div>
-									<div class="best_buy">+</div>
+									
 								</li>
 							</ul>
 						</div>
@@ -141,8 +147,9 @@
 				<div class="product_grid">
 					<table class="table">
 						<!-- PRVI RED-->
-						<div style="margin-top:15%;"></div>						
+												
 						<script type="text/javascript">
+
 							const columnsPerRow = 4;
 							let currentColumn = 0;
 						
@@ -155,28 +162,26 @@
 
 								document.write(`
 								<td>
-								  <div style="margin-top: -70%;">
-									<div class="product">
-									  <div class="product_image" style="width: 300px; height: 300px;">
-										<a href="/Product/Index/${item.id}"><img src="${item.imageURL}" alt=""></a>
-									  </div>
-									  <br /><br /><br /><br /><br /><br /><br /><br/>
-									  <div class="product_content clearfix" style="width: 300px; height: 300px;">
-										<div class="product_info">
-										  <div class="product_name">
-										<a href="/Product/Index/${item.id}">${item.name}</a>
-										  </div>
-										 <div class="product_price">${item.price} din.</div>
-										</div>
-										<div class="product_options">
-										  <div class="product_buy product_option">
-											<img src="images/shopping-bag-white.svg" alt="">
-										  </div>
-										  <div class="product_fav product_option">+</div>
-										</div>
-									  </div>
-									</div>
+							<div style="margin-top:-18.3%;padding:5px;padding-bottom:4em;">
+								<div class="card" style="width: 21rem;">
+								 <a href="/Product/Index/${item.id}"><img class="card-img-top"src="${item.imageURL}" style="width:334px;height:514px;" alt=""></a>
+								  <div class="card-body" style="height:110px;">
+								    <h5 class="product_name"><a href="/Product/Index/${item.id}">${item.name}</a></h5>
+								    <p class="product_price" style="display:inline-block">${item.price} din.
+									<div style="float:right">
+									<div class="product_buy product_option ">
+										<a href="/ShoppingCart/AddProduct/${item.id}">
+										<img src="/images/shopping-bag-white.svg" alt="">
+										</a>
+									 </div>
+									 
+									 </div>
+									</p>
+									
+
 								  </div>
+								</div>
+							</div>
 								</td>
 								 `);
 
@@ -191,6 +196,7 @@
 							if (currentColumn !== 0) {
 								document.write('</tr>');
 							}
+							
 
 						</script>
 					</table>
@@ -200,30 +206,3 @@
 	</div>
 </div>
 
-<!-- Extra -->
-<div class="newsletter">
-	<div class="newsletter_content">
-		<div class="newsletter_image" style="background-image:url(/images/zadnja_slika.jpg)"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title_container text-center">
-						<div class="section_subtitle">Najbolje knjige samo kod nas!</div>
-						<div class="section_title">Sabskrajbujte se za 20% popusta!</div>
-					</div>
-				</div>
-			</div>
-			<div class="row newsletter_container">
-				<div class="col-lg-10 offset-lg-1">
-					<div class="newsletter_form_container">
-						@using (Html.BeginForm("AddEmail", "Home", FormMethod.Post))
-						{
-							<input asp-for="@ns.Email" id="imejl" type="email" class="newsletter_input" required="required" placeholder="E-mail here">
-							<button type="submit" class="newsletter_button">Subscribe</button>
-						}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>

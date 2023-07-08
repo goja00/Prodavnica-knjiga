@@ -14,18 +14,17 @@
 </head>
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
+<div class="row align-items-center justify-content-center" style="margin-top:30vh">
     <div class="col-md-6">
         <form id="email-form" method="post">
+            <h2 class="text-center py-2">Change email</h2>
             <div asp-validation-summary="All" class="text-danger"></div>
             @if (Model.IsEmailConfirmed)
             {
-                <div class="form-floating input-group">
+                <div class="form-floating">
+                    
                     <input asp-for="Email" class="form-control" disabled />
-                    <div class="input-group-append">
-                            <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
-                    </div>
-                    <label asp-for="Email" class="form-label"></label>
+                    <label asp-for="Email" class="form-label" style=""></label>
                 </div>
             }
             else

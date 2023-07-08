@@ -22,12 +22,17 @@ namespace bookverse.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Shop()
         {
             return View();
         }
         public IActionResult Contact() 
+        {
+            return View();
+        }
+        
+        public IActionResult CMS()
         {
             return View();
         }

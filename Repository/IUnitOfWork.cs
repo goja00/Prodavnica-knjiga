@@ -12,6 +12,7 @@ namespace bookverse.Repository
         INewsletterRepository newsletterRepository { get; }
         IOrderDetailsRepository orderDetailsRepository { get; }
         IOrderHeaderRepository orderHeaderRepository { get; }   
+        ICustomerMessageRepository customerMessageRepository { get; }
         void save();
     }
 }

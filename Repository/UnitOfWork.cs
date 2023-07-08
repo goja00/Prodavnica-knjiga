@@ -17,6 +17,7 @@ namespace bookverse.Repository
         public IOrderDetailsRepository orderDetailsRepository {get; private set;}
 
         public IOrderHeaderRepository orderHeaderRepository { get; private set; }
+        public ICustomerMessageRepository customerMessageRepository { get; private set; }
 
         private DBContext db;
 
@@ -30,7 +31,7 @@ namespace bookverse.Repository
             newsletterRepository=new NewsletterRepository(db);
             orderDetailsRepository = new OrderDetailsRepository(db);
             orderHeaderRepository = new OrderHeaderRepository(db);
-       
+            customerMessageRepository = new CustomerMessageRepository(db);
         }
       
         public void save()

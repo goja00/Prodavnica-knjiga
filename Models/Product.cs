@@ -21,18 +21,18 @@ namespace bookverse.Models
         [Range(1, 10000)]
         public double Price { get; set; }
 
-        [Required]
+        [Display(Name = "Image")]
         [ValidateNever]
         public string ImageURL { get; set; }
 
         [Required]
-
+        [Display(Name = "Category")]
         public int CategoryID { get; set; }
 
         [ValidateNever]
         public Category c { get; set; }
         [Required]
-
+        [Display(Name = "Cover Type")]
         public int CoverTypeID { get; set; }
         [ValidateNever]
         public CoverType ct { get; set; }

@@ -1,0 +1,322 @@
+﻿
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/CMSLayout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+}
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.13.5/dataRender/datetime.js"></script>
+
+    <script type="text/javascript">
+        var lista;
+$(document).ready(function() {
+ 
+    var childTable=$('#child').DataTable({
+    columns: [
+        { data: 'id',"width":"5%" },
+        { data: 'orderId', "width":"5%" },
+        { data: 'product.name', "width":"70%" },
+        { data: 'count', "width":"5%" },
+        { data: 'price', "width":"5%" }
+    ]
+    
+    });
+
+    $('#tblData').on( 'click', 'tr', function () {
+    var selektovanRed=parentTable.row( this ).data().id;
+  
+    $.ajax({
+        url:"/OrderHeader/GetDetails",
+        type:"GET",
+        dataSrc:"",
+        datatype:"json",
+        data:{id:selektovanRed},
+        success:function(item)
+        {
+            childTable.clear();
+            item.forEach(function (x){
+            childTable.row.add(x).draw(false);
+})
+
+        }
+    })
+
+
+} );
+
+	var parentTable = $('#tblData').DataTable( {
+		 "ajax": {
+            "url": "/OrderHeader/GetAll",
+            "dataSrc": "",
+            "type": "GET",
+            "datatype": "json"
+        },
+        
+        "select": {
+          "style": 'single'
+        },
+		"columns": [
+			{ "data": "id", "width": "5%" },
+            { "data": "firstName", "width": "10%" },
+            { "data": "lastName", "width": "10%" },
+            { "data": "orderDate", "width": "20%","render":DataTable.render.datetime() },
+            { "data": "shippingDate", "width": "20%","render":DataTable.render.datetime() },
+            { "data": "orderTotal", "width": "5%" },
+            { "data": "orderStatus", "width": "5%" },
+            { "data": "paymentStatus", "width": "5%" },      
+            { "data": "address", "width": "5%" }, 
+            { "data": "town", "width": "5%" }, 
+            { "data": "zipCode", "width": "5%" }, 
+            { "data": "phoneNumber", "width": "5%" }, 
+            { "data": "comment", "width": "15%" }, 
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `
+                    <div style="display:inline-block">
+                        <button class="btn btn-warning" onclick="izmeni(${data})"data-toggle="modal" data-target="#EditModal">Edit</button>
+                        <button class="btn btn-danger" onclick="postaviId(${data})" data-toggle="modal" data-target="#DeleteModal">Delete</button>
+                    </div>
+                           `;
+                }, "width": "15%"
+            }
+		]
+	} );
+  })
+</script>
+
+    <script type="text/javascript">
+        var element;
+        function postaviId(id)
+        {
+            $('#deleteId').val(id);
+        }
+
+        function izmeni(prodid)
+        {
+                $.ajax({
+                    type:"GET",
+                    url:"/OrderHeader/GetOne/",
+                    data:{id:prodid},
+                    success:function(item)
+                    { 
+                        element=item;
+                        $('#EditModal').modal('show');
+                    }
+                })
+                
+         }
+
+         $(document).ready(function() {
+         $('#EditModal').on('show.bs.modal', function (e) {
+             $('#prodid').val(element.id);
+          $('#name').val(element.name);
+            })
+         })
+
+            $('.btnCancel').click(function(){
+                window.location.href="/CMS/OrderHeaderView";
+            })
+    </script>
+}
+@model OrderHeader
+
+<!-- Add Modal -->
+<div class="modal" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Dodajte kategoriju</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Create" asp-controller="OrderHeader" id="addForm">
+                    <div class="form-group">
+                        <input asp-for="Id" id="prodid" hidden />
+
+                        <label asp-for="FirstName"></label><input id="name" asp-for="FirstName" class="form-control" type="text" placeholder="First name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                        <label asp-for="LastName"></label><input id="name" asp-for="LastName" class="form-control" type="text" placeholder="Last name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+
+                        <label asp-for="OrderDate"></label><input id="name" asp-for="OrderDate" class="form-control" type="datetime" placeholder="Order date" />
+                        <span asp-validation-for="OrderDate" class="text-danger"></span>
+
+                        <label asp-for="ShippingDate"></label><input id="name" asp-for="ShippingDate" class="form-control" type="datetime" placeholder="Shipping date" />
+                        <span asp-validation-for="ShippingDate" class="text-danger"></span>
+
+                        <label asp-for="OrderTotal"></label><input id="name" asp-for="OrderTotal" class="form-control" type="text" placeholder="Order total" />
+                        <span asp-validation-for="OrderTotal" class="text-danger"></span>
+
+                        <label asp-for="OrderStatus"></label><input id="name" asp-for="OrderStatus" class="form-control" type="text" placeholder="Order status" />
+                        <span asp-validation-for="OrderStatus" class="text-danger"></span>
+
+                        <label asp-for="PaymentStatus"></label><input id="name" asp-for="PaymentStatus" class="form-control" type="text" placeholder="Payment status" />
+                        <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+
+                        <label asp-for="Address"></label><input id="name" asp-for="Address" class="form-control" type="text" placeholder="Address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+
+                        <label asp-for="Town"></label><input id="name" asp-for="Town" class="form-control" type="text" placeholder="Town" />
+                        <span asp-validation-for="Town" class="text-danger"></span>
+
+                        <label asp-for="ZipCode"></label><input id="name" asp-for="ZipCode" class="form-control" type="text" placeholder="Zip code" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+
+                        <label asp-for="PhoneNumber"></label><input id="name" asp-for="PhoneNumber" class="form-control" type="text" placeholder="Phone number" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                       <label asp-for="Comment"></label><textarea id="name" asp-for="Comment" class="form-control" type="text" placeholder="Comment" ></textarea>
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+  
+                    </div>
+                    <div style="float:right">
+                    <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Zatvori</button>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Edit MODAL-->
+<div class="modal" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Izmenite kategoriju</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Update" asp-controller="OrderHeader" method="post" id="EditForm">
+                    <div class="form-group">
+                        <input asp-for="Id" id="prodid" hidden />
+                        <label asp-for="FirstName"></label><input id="name" asp-for="FirstName" class="form-control" type="text" placeholder="First name" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                        <label asp-for="LastName"></label><input id="name" asp-for="LastName" class="form-control" type="text" placeholder="Last name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+
+                        <label asp-for="OrderDate"></label><input id="name" asp-for="OrderDate" class="form-control" type="datetime" placeholder="Order date" />
+                        <span asp-validation-for="OrderDate" class="text-danger"></span>
+
+                        <label asp-for="ShippingDate"></label><input id="name" asp-for="ShippingDate" class="form-control" type="datetime" placeholder="Shipping date" />
+                        <span asp-validation-for="ShippingDate" class="text-danger"></span>
+
+                        <label asp-for="OrderTotal"></label><input id="name" asp-for="OrderTotal" class="form-control" type="text" placeholder="Order total" />
+                        <span asp-validation-for="OrderTotal" class="text-danger"></span>
+
+                        <label asp-for="OrderStatus"></label><input id="name" asp-for="OrderStatus" class="form-control" type="text" placeholder="Order status" />
+                        <span asp-validation-for="OrderStatus" class="text-danger"></span>
+
+                        <label asp-for="PaymentStatus"></label><input id="name" asp-for="PaymentStatus" class="form-control" type="text" placeholder="Payment status" />
+                        <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+
+                        <label asp-for="Address"></label><input id="name" asp-for="Address" class="form-control" type="text" placeholder="Address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+
+                        <label asp-for="Town"></label><input id="name" asp-for="Town" class="form-control" type="text" placeholder="Town" />
+                        <span asp-validation-for="Town" class="text-danger"></span>
+
+                        <label asp-for="ZipCode"></label><input id="name" asp-for="ZipCode" class="form-control" type="text" placeholder="Zip code" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+
+                        <label asp-for="PhoneNumber"></label><input id="name" asp-for="PhoneNumber" class="form-control" type="text" placeholder="Phone number" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                        <label asp-for="Comment"></label><textarea id="name" asp-for="Comment" class="form-control" type="text" placeholder="Comment" ></textarea>
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+                    <div style="float:right">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Zatvori</button>
+                        <button type="submit" id="btnSave" class="btn btn-primary">Izmeni</button>
+                        </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!--Delete MODAL-->
+<div class="modal" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Brisanje proizvoda</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Da li ste sigurni?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete" asp-controller="OrderHeader" method="post">
+                <input id="deleteId" asp-for="Id" hidden />
+                <button type="button"  class="btn btn-secondary btnCancel" data-dismiss="modal">Zatvori</button>
+                 <button type="submit" class="btn btn-danger">Izbrisi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center align-items-center justify-content-center" style="display:flex;"> 
+<!--MASTER table-->
+    <table id="tblData" class="table-bordered display table-hover text-center py-2" style="font-size:18px;width:100%;">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First name</th>  
+            <th>Last name</th>
+            <th>Order date</th> 
+            <th>Shipping date</th>
+            <th>Order total</th> 
+            <th>Order status</th>
+            <th>Payment status</th> 
+            <th>Address</th>
+            <th>Town</th>
+            <th>Zip code</th>
+            <th>Phone number</th>
+            <th>Comment</th>
+            <th class="text-center"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#AddModal">Add</button></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+</div><br /><hr /><br />
+<div class="text-center align-items-center justify-content-center" style="display:flex;"> 
+<!--DETAIL table-->
+ <table id="child" class="table-bordered display table-hover text-center py-2" style="font-size:18px;width:100%;">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Order Id</th>  
+            <th>Product</th>
+            <th>Count</th> 
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+</div>

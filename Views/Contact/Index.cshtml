@@ -2,6 +2,7 @@
 	ViewData["Title"] = "Kontakt";
 	Layout = "_Layout";
 	Newsletter ns = new Newsletter();
+	CustomerMessage cm = new CustomerMessage();
 }
 @section Scripts{
 	<script src="~/js/contact_custom.js"></script>
@@ -77,14 +78,14 @@
 				<div class="review_form_container">
 					<div class="review_form_title">Kontaktirajte nas!</div>
 					<div class="review_form_content">
-						<form action="#" id="review_form" class="review_form">
+						<form asp-action="saveMessage" id="review_form" class="review_form" method="post">
 							<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-								<input type="text" class="review_form_input" placeholder="Name" required="required">
-								<input type="email" class="review_form_input" placeholder="E-mail" required="required">
-								<input type="text" class="review_form_input" placeholder="Subject">
+								<input asp-for="@cm.Name" type="text" class="review_form_input" placeholder="Ime" required="required">
+								<input asp-for="@cm.Email"  type="email" class="review_form_input" placeholder="E-mail" required="required">
+								<input asp-for="@cm.Subject" type="text" class="review_form_input" placeholder="Naslov">
 							</div>
-							<textarea class="review_form_text" name="review_form_text" placeholder="Message"></textarea>
-							<button type="submit" class="review_form_button">send message</button>
+							<textarea asp-for="@cm.Message" class="review_form_text" name="review_form_text" placeholder="Poruka"></textarea>
+							<button type="submit" class="review_form_button">Posaljite</button>
 						</form>
 					</div>
 				</div>

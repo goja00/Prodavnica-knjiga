@@ -1,4 +1,9 @@
-﻿<html lang="en">
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<html lang="en">
 <head>
 	<title>@ViewData["Title"]</title>
     <meta charset="utf-8">
@@ -17,9 +22,21 @@
 				<div class="logo"><a href="#">Bookverse</a></div>
 				<nav class="main_nav">
 					<ul>
+						@if (SignInManager.IsSignedIn(User) && User.IsInRole(Roles.Role_Admin))
+						{
 						<li><a asp-controller="Home" asp-action="Index">Početna</a></li>
 						<li><a asp-controller="Shop" asp-action="Index">Prodavnica</a></li>
 						<li><a asp-controller="Contact" asp-action="Index">Kontakt</a></li>
+						<li><a asp-controller="CMS" asp-action="Index">Content Managment System</a></li>
+						}
+						else
+						{
+							<li><a asp-controller="Home" asp-action="Index">Početna</a></li>
+							<li><a asp-controller="Shop" asp-action="Index">Prodavnica</a></li>
+							<li><a asp-controller="Contact" asp-action="Index">Kontakt</a></li>
+							
+						}
+
 					</ul>
 				</nav>
 
@@ -40,7 +57,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col text-center">
-						<div class="footer_logo"><a href="#">Bookverse</a></div>
+						<div class="footer_logo"><a href="/Home/Index">Bookverse</a></div>
 						<nav class="footer_nav">
 							<ul>
 								<li><a asp-controller="Home" asp-action="Index">Početna</a></li>

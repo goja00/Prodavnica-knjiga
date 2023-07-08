@@ -10,7 +10,7 @@ using NToastNotify;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
- 
+builder.Services.AddControllersWithViews().AddControllersAsServices();
 var connectionString = builder.Configuration.GetConnectionString("DBContextConnection") ?? throw new InvalidOperationException("Connection string 'DBContextConnection' not found.");
 
 builder.Services.AddDbContext<DBContext>(options =>
@@ -22,7 +22,7 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignI
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
-builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions { ProgressBar = true, Timeout = 2000,});
+builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions { ProgressBar = true, Timeout = 1000,});
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
