@@ -68,7 +68,7 @@
 								<input type="text" class="checkout_input ml-3" asp-for="OrderHeader.PhoneNumber" placeholder="Broj telefona" required="required">
 								<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
 							</div>
-							<textarea name="checkout_comment" id="checkout_comment" class="checkout_comment" placeholder="Komentar"></textarea>
+							<textarea asp-for="OrderHeader.Comment"name="checkout_comment" id="checkout_comment" class="checkout_comment" placeholder="Komentar"></textarea>
 							<div class="payment_options">
 						<button type="submit" class="cart_total_button" style="background-color:seagreen;margin-top:0">Kupite</button>
 								

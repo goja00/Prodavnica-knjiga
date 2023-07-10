@@ -19,11 +19,11 @@ namespace bookverse.Controllers
 			return View();
 		}
 
-		public IActionResult saveMessage(CustomerMessage customerMessage)
+		public IActionResult saveMessage(CustomerMessage cm)
 		{
 			if(ModelState.IsValid)
 			{
-				unitOfWork.customerMessageRepository.Add(customerMessage);
+				unitOfWork.customerMessageRepository.Add(cm);
 				unitOfWork.save();
 				toast.AddSuccessToastMessage("Uspesno ste poslali poruku!");
 				return RedirectToAction("Index","Home");
